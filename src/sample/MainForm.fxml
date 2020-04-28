@@ -1,29 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Text?>
-
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MainForm">
    <children>
       <AnchorPane prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #232B59; -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);">
          <children>
-            <AnchorPane layoutY="7.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-background-radius: 100%;">
-               <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="33.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../Desktop/Мои%20Пенаты/Мужчина%202.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </AnchorPane>
-            <Text layoutY="-13.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="22.13671875" />
-            <Text layoutX="73.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <Text layoutX="68.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <Text layoutX="63.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Circle fx:id="circleFrame" fill="DODGERBLUE" layoutX="100.0" layoutY="100.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
          </children>
       </AnchorPane>
+      <Text fx:id="firstnameFied" layoutX="470.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="lastnameField" layoutX="470.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="loginField" layoutX="470.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
    </children>
 </AnchorPane>

@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 
 public class RegistrationForm {
 
+    DBServer.Users users;
     @FXML
     private ResourceBundle resources;
 
@@ -72,22 +73,22 @@ public class RegistrationForm {
                 checkFillTextField(passwordFieldRepeat) &&
                 checkPasswordFields(passwordField, passwordFieldRepeat)
         ){
-            File config = new File("config.txt");
-            if (!config.exists()){
-                if (!config.createNewFile())
-                    throw new IOException("Не удалось создать файл");
+
+            if (users.checkFreeLogin(loginField.getText())) {
+                users.insert(nameField.getText(), lastNameField.getText(),
+                        loginField.getText(), passwordField.getText());
+
+                Transition.hideWindow(signInBt);
+                Transition.openWindow(getClass().getResource("sample.fxml"));
+            } else {
+                loginField.setStyle("-fx-border-color:red");
             }
-
-            FileWriter fout = new FileWriter(config);
-            fout.write(loginField.getText() + "\n");
-            fout.write(passwordField.getText());
-            fout.close();
-
         }
     }
 
     @FXML
     void initialize() {
-
+        DBServer dbServer = new DBServer();
+        users = dbServer.new Users();
     }
 }

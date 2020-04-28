@@ -24,6 +24,8 @@ import javafx.stage.Stage;
 
 public class Controller {
 
+    DBServer.Users users;
+
     Text errorText = new Text();
 
     @FXML
@@ -48,18 +50,10 @@ public class Controller {
     private Text goToRegistration;
 
     @FXML
-    void registrationTxtClick(MouseEvent event) {
-        goToRegistration.getScene().getWindow().hide();
-        try {
-            Parent root = FXMLLoader.load(getClass()
-                    .getResource("registrationForm.fxml"));
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    void registrationTxtClick(MouseEvent event) throws IOException {
+        Transition.hideWindow(goToRegistration);
+        Transition.openWindow(getClass()
+                .getResource("registrationForm.fxml"));
     }
 
     boolean checkFillTextField(TextField tf) {
@@ -81,23 +75,16 @@ public class Controller {
     }
 
     @FXML
-    void signInBtClick(MouseEvent event) throws FileNotFoundException {
+    void signInBtClick(MouseEvent event) throws IOException {
         if (checkFillTextField(loginField) &&
                 checkFillTextField(passwordField)) {
-            File config = new File("config.txt");
-            if (!config.exists()) {
-                showErrorText("Необходимо зарегистрироваться!");
+            if (users.select(loginField.getText(), passwordField.getText()) != null){
+                ObservableList <Node> children = form.getChildren();
+                children.remove(children.size()-1);
+                Transition.hideWindow(signInBt);
+                Transition.openWindow(getClass().getResource("MainForm.fxml"));
             } else {
-                Scanner in = new Scanner(config);
-                String login = in.nextLine(), password = in.nextLine();
-                if (loginField.getText().equals(login) &&
-                        passwordField.getText().equals(password)){
-                    ObservableList <Node> children = form.getChildren();
-                    children.remove(children.size()-1);
-                    System.out.println("Пользователь найден");
-                } else {
-                    showErrorText("Пользователь не найден!");
-                }
+                showErrorText("Пользователь не найден!");
             }
         }
     }
@@ -106,5 +93,7 @@ public class Controller {
     void initialize() {
         errorText.setFill(Paint.valueOf("#fd0000"));
         form.getChildren().add(errorText);
+        DBServer dbServer = new DBServer();
+        users = dbServer.new Users();
     }
 }
